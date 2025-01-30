@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
+
+import axios from 'axios';
 import './App.css';
+// import { Axios } from 'axios';
 
 function App() {
 
   let [count, setcount] = useState([]);
-  let data = (e) => {
+  let data = async (e) => {
     e.preventDefault();
     let value1 = e.target.todo.value;
     if(value1==''){
@@ -13,6 +15,7 @@ function App() {
     }
     else{
       if(!count.includes(value1)){
+        await axios.post("localhost:8080/", { text: value1 });
     let finalValue = [...count,value1];
     setcount(finalValue);
     e.target.todo.value = "";
@@ -20,6 +23,9 @@ function App() {
       else{
         alert("It is already exist")
       }
+
+       
+
     }
   }
 
@@ -50,8 +56,8 @@ function App() {
   );
 };
 function Todolist({ value,count,setCount,index }) {
-  console.log({value})
-  console.log({index})
+  // console.log({value})
+  // console.log({index})
   let [done,setdone] = useState(false)
   const rejectIt = () => {
     const updatedCount = count.filter((_, i) => i !== index);
